@@ -1,2 +1,6 @@
-package com.RajDhakar.SpringCore;public interface Coach {
+package com.RajDhakar.SpringCore;
+
+public interface Coach {
+
+    String getDailyWorkOut();
 }
