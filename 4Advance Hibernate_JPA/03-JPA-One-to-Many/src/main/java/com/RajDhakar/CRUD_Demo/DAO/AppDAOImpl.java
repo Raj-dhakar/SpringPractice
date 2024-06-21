@@ -1,11 +1,15 @@
 package com.RajDhakar.CRUD_Demo.DAO;
 
+import com.RajDhakar.CRUD_Demo.entity.Course;
 import com.RajDhakar.CRUD_Demo.entity.Instructor;
 import com.RajDhakar.CRUD_Demo.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class AppDAOImpl implements AppDAO{
@@ -64,5 +68,19 @@ public class AppDAOImpl implements AppDAO{
         tempInstructorDetail.getInstructor().setInstructorDetail(null);
 
         entityManager.remove(tempInstructorDetail);
+    }
+
+    @Override
+    public List<Course> findCourseByInstructorId(int theId) {
+
+        TypedQuery<Course> query=entityManager.createQuery(
+                "form Course where instructor.id=:data", Course.class
+        );
+
+        query.setParameter("data",theId);
+
+        List<Course> courses=query.getResultList();
+
+        return courses;
     }
 }

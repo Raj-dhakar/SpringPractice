@@ -1,8 +1,12 @@
 package com.RajDhakar.CRUD_Demo.DAO;
 
+import com.RajDhakar.CRUD_Demo.entity.Course;
 import com.RajDhakar.CRUD_Demo.entity.Instructor;
 import com.RajDhakar.CRUD_Demo.entity.InstructorDetail;
+import jakarta.persistence.Column;
 import jakarta.persistence.criteria.CriteriaBuilder;
+
+import java.util.List;
 
 public interface AppDAO {
 
@@ -17,4 +21,6 @@ public interface AppDAO {
     void deleteInstructorDetailById(int theid);
 
     void deleteOnlyInstructorDetailById(int theid);
+
+    List<Course> findCourseByInstructorId(int theId);
 }

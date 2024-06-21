@@ -2,9 +2,18 @@ package com.RajDhakar.CRUD_Demo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="instructor")
 public class Instructor {
+
+    @OneToMany(mappedBy = "instructor",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH,CascadeType.MERGE,
+            CascadeType.REFRESH,CascadeType.PERSIST})
+    List<Course> courses;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,6 +84,14 @@ public class Instructor {
         this.instructorDetail = instructorDetail;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
     @Override
     public String toString() {
         return "Instructor{" +
@@ -84,5 +101,18 @@ public class Instructor {
                 ", email='" + email + '\'' +
                 ", instructorDetail=" + instructorDetail +
                 '}';
+    }
+
+    // add convinence method for bi-directional relationship
+
+    public void add(Course tempCourse){
+
+        if(courses==null){
+            courses=new ArrayList<>();
+        }
+
+        courses.add(tempCourse);
+
+        tempCourse.setInstructor(this);
     }
 }
